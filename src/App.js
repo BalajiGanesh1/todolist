@@ -55,7 +55,23 @@ class App extends Component {
      completed: false
     }
 
-    this.setState({todos: [...this.state.todos,newTodo]})
+    this.setState({todos: [...this.state.todos,newTodo]});
+   }
+
+     editTodo = (id,edittedTodo)=>{
+       console.log("entrwred app.js")
+     this.setState({ 
+       todos:this.state.todos.map( todo =>{
+        if(todo.id=== id)
+        { 
+         
+          todo.title= edittedTodo;
+ 
+        }
+       return todo
+      })
+     });
+
    }
 
 
@@ -66,7 +82,7 @@ class App extends Component {
         <div className="Container">
             <Header />
             <AddTodo addTodo={this.addTodo}/>
-            <Todos todos={this.state.todos} delTodo={this.delTodo} markComplete={this.markComplete}/>
+            <Todos todos={this.state.todos} editTodo={this.editTodo} delTodo={this.delTodo} markComplete={this.markComplete}/>
           </div>
       </div>
     );

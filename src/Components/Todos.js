@@ -12,7 +12,7 @@ export class Todos extends Component {
 
      */ 
     /*<h3>{ disp.title  } </h3>*/
-    <TodoItem key={disp.id} todo ={disp} delTodo={this.props.delTodo} markComplete={this.props.markComplete}/>
+    <TodoItem key={disp.id} todo ={disp} editTodo={this.props.editTodo}delTodo={this.props.delTodo} markComplete={this.props.markComplete}/>
     ) )
   }
 }
@@ -22,6 +22,7 @@ been gathered*/
 Todos.propTypes ={
     todos:PropTypes.array.isRequired,
     markComplete: PropTypes.func.isRequired,
-    delTodo: PropTypes.func.isRequired
+    delTodo: PropTypes.func.isRequired,
+    editTodo: PropTypes.func.isRequired
 }
 export default Todos
