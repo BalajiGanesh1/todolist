@@ -4,7 +4,8 @@ export class TodoItem extends Component {
   constructor (){
    super();
    this.state={ editing:false,
-                edittedTodo:'' 
+                edittedTodo:'' ,
+                editingFirstTime: true
               }
 
   }
@@ -29,9 +30,28 @@ export class TodoItem extends Component {
  } */
 
  handleEditing=(e) =>{
+  
+if(this.state.editingFirstTime)
+{
  this.setState({editing:true,
- edittedTodo:e.target.value});
- this.props.editTodo(this.props.todo.id,this.state.edittedTodo);
+ edittedTodo:this.props.todo.title});
+ this.setState({editingFirstTime:false},()=>{
+  this.props.editTodo(this.props.todo.id,this.state.edittedTodo);
+ });
+ 
+
+}
+ else
+ {
+  this.setState({editing:true,
+  edittedTodo:e.target.value},()=>{
+    this.props.editTodo(this.props.todo.id,this.state.edittedTodo);
+  });
+
+
+ }
+ 
+ 
 
  }
 
@@ -49,13 +69,23 @@ export class TodoItem extends Component {
      const {id,title} =this.props.todo;
      const editStyle=
      {
-       backgroundColor:'white',
-       width:'100%'
+       backgroundColor:'pink',
+       width: '50%',
+       marginLeft:'25%'
     };
       const viewStyle=
      {
-       backgroundColor:'pink'
+      backgroundColor: 'pink',
+      textDecoration: 'none',
+      width: '50%',
+      marginLeft:'25%'
 
+     }
+     if(this.props.todo.completed)
+     {
+      viewStyle.backgroundColor= 'lightgreen';
+      viewStyle.textDecoration= 'line-through';
+      
      }
 
      if(this.state.editing){
@@ -71,7 +101,7 @@ export class TodoItem extends Component {
        backgroundColor:'red',
        color:'white',
        border: 'none',
-       padding: '5px 8px',
+       padding: '0px 8px',
        borderradius: '50%',
        cursor:'pointer',
        float: 'right'
@@ -81,8 +111,7 @@ export class TodoItem extends Component {
     return (
      
      <ul>
-      < div style= {viewStyle} onDoubleClick=
-      {this.handleEditing} >
+      < div style= {viewStyle} onDoubleClick= {this.handleEditing} >
         <p>
       <input type="checkbox" onChange={ this.props.markComplete.bind(this,id)} />
         {title }
